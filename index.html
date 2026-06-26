@@ -6,32 +6,72 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cocktail Explorer 🍹</title>
   <link rel="stylesheet" href="./src/style.css">
+  <link rel="shortcut icon" href="./public/Logo.jpg" type="image/x-icon">
 </head>
 
 <body>
 
   <header class="hero">
 
-    <h1>🍹 Cocktail Explorer</h1>
+    <h1 class="logoTitulo">
 
-    <p>Descubrí tragos, explorá sabores</p>
+      <img src="./public/Marcianito.png" alt="Logo">
+
+      <span>Cocktails VC</span>
+
+    </h1>
+
+    <p>Descubrí tragos, explorá sabores, y replicalos en casa!!</p>
+
+    <div class="headerButtons">
+
+      <a href="favoritos.html" class="btnNav">
+        ❤️ Favoritos
+      </a>
+
+      <button id="themeBtn">
+        🌙 Modo oscuro
+      </button>
+
+    </div>
 
   </header>
 
   <section class="controls">
-
     <input id="searchInput" placeholder="Buscar cóctel...">
 
     <button id="btnSearch">Buscar</button>
-
+    <button id="btnLetter">🔠 Buscar por letra</button>
+    <button id="btnIngredient">🍋 Ingrediente</button>
     <button id="btnSurprise">🎲 Sorprendeme</button>
 
   </section>
+  <div id="loadingScreen" class="loading hidden">
 
+    <p>🍹 Cargando...</p>
+
+    <div class="bar">
+
+      <div class="progress"></div>
+
+    </div>
+
+  </div>
   <section id="container"></section>
 
   <script type="module" src="./src/main.js"></script>
 
+  <div id="modal" class="modal hidden">
+
+    <div class="modalContent">
+
+      <button id="closeModal">✖</button>
+
+      <div id="modalBody"></div>
+
+    </div>
+
+  </div>
 </body>
 
 </html>
