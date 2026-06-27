@@ -7,15 +7,6 @@ import {
   getCocktailById,
   searchByIngredient,
 } from "./api";
-function router() {
-  const path = window.location.pathname;
-
-  if (path === "/favoritos") {
-    cargarFavoritosVista();
-  } else {
-    init();
-  }
-}
 
 const container = document.getElementById("container");
 const input = document.getElementById("searchInput");
@@ -160,7 +151,7 @@ window.toggleFav = function (id, boton) {
     boton.classList.add("active");
   }
 
-  localStorage.setItem("favoritos", JSON.stringify(favoritos));
+  localStorage.setItem("../favoritos.html", JSON.stringify(favoritos));
 };
 const themeBtn = document.getElementById("themeBtn");
 
@@ -246,28 +237,3 @@ btnSearch.addEventListener("click", async () => {
 
   render(data.drinks);
 });
-async function cargarFavoritosVista() {
-  const container = document.getElementById("container");
-  const favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-
-  container.innerHTML = "<h2>❤️ Favoritos</h2>";
-
-  if (favoritos.length === 0) {
-    container.innerHTML += "<p>No tenés favoritos</p>";
-    return;
-  }
-
-  for (const id of favoritos) {
-    const data = await getCocktailById(id);
-    const drink = data.drinks[0];
-
-    container.innerHTML += `
-      <div class="card">
-        <img src="${drink.strDrinkThumb}">
-        <h3>${drink.strDrink}</h3>
-      </div>
-    `;
-  }
-}
-window.addEventListener("popstate", router);
-router();
