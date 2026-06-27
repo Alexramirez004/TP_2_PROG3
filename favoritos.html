@@ -4,18 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Favoritos - Cocktail VC</title>
     <link rel="stylesheet" href="./src/style.css">
+    <title>Mis Favoritos</title>
 </head>
 
 <body>
     <header class="hero">
-        <h1>❤️ Mis Favoritos</h1>
+        <h1 class="logoTitulo">
+            <img src="./public/Marcianito.png" alt="Logo">
+            <span>❤️ Mis Favoritos</span>
+        </h1>
+
         <div class="headerButtons">
-            <a href="/" class="btnNav">🍹 Inicio</a>
+            <!-- Botón para volver al inicio -->
+            <a href="/" class="btnNav">
+                🏠 Volver al Inicio
+            </a>
+            <button id="themeBtn" class="btnNav" style="background: linear-gradient(135deg, #444, #222);">
+                🌙 Modo oscuro
+            </button>
         </div>
     </header>
+
     <section id="container"></section>
+
     <script type="module" src="./src/favorites.js"></script>
 </body>
 
