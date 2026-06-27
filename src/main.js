@@ -151,7 +151,7 @@ window.toggleFav = function (id, boton) {
     boton.classList.add("active");
   }
 
-  localStorage.setItem("../favoritos.html", JSON.stringify(favoritos));
+  localStorage.setItem("favoritos", JSON.stringify(favoritos));
 };
 const themeBtn = document.getElementById("themeBtn");
 
@@ -236,4 +236,53 @@ btnSearch.addEventListener("click", async () => {
   hideLoading();
 
   render(data.drinks);
+});
+// Manejador para ir a favoritos
+document.getElementById("favoritosLink")?.addEventListener("click", (e) => {
+  e.preventDefault();
+  window.location.hash = "favoritos";
+  renderFavoritos();
+});
+
+// Función para renderizar favoritos
+async function renderFavoritos() {
+  const container = document.getElementById("container");
+  const favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+
+  if (favoritos.length === 0) {
+    container.innerHTML = "<h2>No tenés favoritos ❤️</h2>";
+    return;
+  }
+
+  container.innerHTML =
+    '<h2>❤️ Mis Favoritos</h2><div id="favoritosGrid"></div>';
+  const grid = document.getElementById("favoritosGrid");
+  grid.style.display = "grid";
+  grid.style.gridTemplateColumns = "repeat(auto-fill, minmax(220px, 1fr))";
+  grid.style.gap = "15px";
+  grid.style.padding = "20px";
+
+  for (const id of favoritos) {
+    const data = await getCocktailById(id);
+    const drink = data.drinks[0];
+
+    grid.innerHTML += `
+            <div class="card" onclick="openModalFromId('${drink.idDrink}')">
+                <img src="${drink.strDrinkThumb}" alt="${drink.strDrink}">
+                <div class="info">
+                    <h3>${drink.strDrink}</h3>
+                </div>
+            </div>
+        `;
+  }
+}
+
+// Detectar cambios en el hash
+window.addEventListener("hashchange", () => {
+  if (window.location.hash === "#favoritos") {
+    renderFavoritos();
+  } else {
+    // Volver a la vista principal
+    init();
+  }
 });
