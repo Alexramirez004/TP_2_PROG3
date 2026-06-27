@@ -7,6 +7,15 @@ import {
   getCocktailById,
   searchByIngredient,
 } from "./api";
+function router() {
+  const path = window.location.pathname;
+
+  if (path === "/favoritos") {
+    cargarFavoritosVista();
+  } else {
+    init();
+  }
+}
 
 const container = document.getElementById("container");
 const input = document.getElementById("searchInput");
@@ -229,7 +238,6 @@ btnSearch.addEventListener("click", async () => {
 
   let texto = input.value.toLowerCase().trim();
 
-  // Traducción automática
   texto = traducciones[texto] || texto;
 
   const data = await searchByName(texto);
@@ -238,3 +246,28 @@ btnSearch.addEventListener("click", async () => {
 
   render(data.drinks);
 });
+async function cargarFavoritosVista() {
+  const container = document.getElementById("container");
+  const favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+
+  container.innerHTML = "<h2>❤️ Favoritos</h2>";
+
+  if (favoritos.length === 0) {
+    container.innerHTML += "<p>No tenés favoritos</p>";
+    return;
+  }
+
+  for (const id of favoritos) {
+    const data = await getCocktailById(id);
+    const drink = data.drinks[0];
+
+    container.innerHTML += `
+      <div class="card">
+        <img src="${drink.strDrinkThumb}">
+        <h3>${drink.strDrink}</h3>
+      </div>
+    `;
+  }
+}
+window.addEventListener("popstate", router);
+router();
